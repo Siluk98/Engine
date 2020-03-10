@@ -42,7 +42,7 @@ void StateMgr::popState()
 {
     if(!states.empty())
     {
-        //states.back()->cleanup();
+        states.back()->cleanup();
         delete states.back();
         states.pop_back();
         if(!states.empty())

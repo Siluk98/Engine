@@ -65,6 +65,7 @@ Action EventMgr::getAction(std::string name)
 
 EventMgr* EventMgr::getInstance()
 {
+    if(instance == nullptr) instance = new EventMgr;
     return instance;
 }
 

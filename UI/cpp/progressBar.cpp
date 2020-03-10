@@ -37,8 +37,10 @@ ProgressBar::ProgressBar(std::string _id, cssHandler& _css)
     moveTo(100,100);
 
     applyStyle(_css);
-
+    std::cout << __FILE__   << ":" << __LINE__ << "CSS" << std::endl;
+    std::cout << __FILE__   << ":" << __LINE__ << fontName << std::endl;
     font = FontMgr::getInstance()->loadFont(fontName);
+    std::cout << __FILE__   << ":" << __LINE__ << "LOADED" << std::endl;
     text.setFont(*font);
 }
 
@@ -93,10 +95,10 @@ void ProgressBar::update()
 
 void ProgressBar::changeStyle(std::string atr,std::string val)
 {
+    std::cout << id << ": " << atr << ": " << val << std::endl;
     try
     {
         if(val == "") return;
-        std::cout << id << ": " << atr << ": " << val << std::endl;
         if(atr == "width")
         {
             int i = std::stoi(val);

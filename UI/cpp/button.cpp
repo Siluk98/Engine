@@ -4,7 +4,14 @@
 
 using namespace UI;
 
-Button::Button(){}
+Button::Button()
+{
+    printText=nullptr;
+    font=nullptr;
+    press=nullptr;
+    active=nullptr;
+    isPressed = false;
+}
 
 Button::Button(std::string id, int left, int top,std::string text, std::string active, std::string press,sf::Color color, Action act)
 {
@@ -21,6 +28,10 @@ Button::Button(std::string id, int left, int top,std::string text, std::string a
     isPressed = false;
     click = act;
     container = true;
+    this->text = text;
+    auto fnt = FontMgr::getInstance();
+    if(fnt!=nullptr) font = fnt->loadFont("default");
+    printText = new sf::Text(text,*font);
     addType("button");
     addEvent("MouseDown", Action{[](Object* a, Object* b, std::string arg1, std::string arg2){
                 UI::Button *c = dynamic_cast<Button*>(a);
@@ -42,7 +53,7 @@ Button::Button(std::string id, int left, int top,std::string text, std::string a
     std::cout << "btConstEnd: " << id << std::endl;
 }
 
-Button::Button(std::string id, cssHandler& css,std::string text="",std::string active="bt.png", std::string press="bt.png", Action act = nullptr)
+Button::Button(std::string id, cssHandler& css,std::string text,std::string active, std::string press, Action act)
 {
     this->id = id;
     addAnimation(active);
@@ -50,9 +61,13 @@ Button::Button(std::string id, cssHandler& css,std::string text="",std::string a
     currentAnimation = animation[0];
     addSprite();
     hitbox = new sf::IntRect(0,0,sprite->getTexture()->getSize().x,sprite->getTexture()->getSize().y);
-    applyStyle(css);
     click = act;
+    this->text = text;
+    auto fnt = FontMgr::getInstance();
+    if(fnt!=nullptr) font = fnt->loadFont("default"); //condition unnessesary
+    printText = new sf::Text(text,*font);
     container = true;
+    applyStyle(css);
     addType("button");
     addEvent("MouseDown", Action{[](Object* a, Object* b, std::string arg1, std::string arg2){
                 UI::Button *c = dynamic_cast<Button*>(a);
@@ -73,7 +88,9 @@ Button::Button(std::string id, cssHandler& css,std::string text="",std::string a
              }});
 }
 
-Button::~Button(){};
+Button::~Button(){
+    delete printText;
+};
 
 void Button::update()
 {
@@ -88,8 +105,8 @@ void Button::collide(Object* collider){}
 std::string Button::create(std::string obj, std::string params){return this->id;}
 void Button::draw(sf::RenderTarget &target, sf::RenderStates s) const
 {
-
     target.draw(*sprite);
+    target.draw(*printText);
 }
 
 std::string Button::getText(){return text;}
@@ -100,9 +117,10 @@ void Button::changeStyle(std::string atr, std::string val)
     {
         if(val == "") return;
         std::cout << id << ": " << atr << ": " << val << std::endl;
-        int i = std::stoi(val);
+
         if(atr == "width")
         {
+            int i = std::stoi(val);
             auto s = sprite->getScale();
             auto bounds = sprite->getGlobalBounds();
             float ns = i/bounds.width;
@@ -112,6 +130,7 @@ void Button::changeStyle(std::string atr, std::string val)
         }
         if(atr == "height")
         {
+            int i = std::stoi(val);
             auto s = sprite->getScale();
             auto bounds = sprite->getGlobalBounds();
             float ns = i/bounds.height;
@@ -121,17 +140,32 @@ void Button::changeStyle(std::string atr, std::string val)
         }
         if(atr == "top")
         {
+            int i = std::stoi(val);
             std::cout << sprite->getPosition().x << " " << i << std::endl;
             moveTo(sprite->getPosition().x,i);
+            printText->setPosition(printText->getPosition().x,i);
         }
         if(atr == "left")
         {
+            int i = std::stoi(val);
             std::cout << i << " " << sprite->getPosition().y << std::endl;
             moveTo(i,sprite->getPosition().y);
+            printText->setPosition(i,printText->getPosition().y);
         }
         if(atr == "color")
         {
-
+            std::cout << __FILE__   << ":" << __LINE__ << "dupa1" << std::endl;
+            if(printText != nullptr)
+            {
+                sf::Color c = UI::Style::getColor(val);
+                std::cout << __FILE__   << ":" << __LINE__ << "dupa2" << std::endl;
+                std::cout   << (unsigned int)c.r << " "
+                            << (unsigned int)c.g << " "
+                            << (unsigned int)c.b << " "
+                            << (unsigned int)c.a << std::endl;
+                printText->setFillColor(c);
+            }
+            std::cout << __FILE__   << ":" << __LINE__ << "dupa3" << std::endl;
         }
     }
     catch(...)

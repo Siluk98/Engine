@@ -26,7 +26,7 @@ inline void initDefaultPredicates(EventMgr* mgr)
                     {
                         //std::cout << "4";
                         sf::IntRect* hitbox = a->getHitbox();
-                        auto pos = sf::Mouse::getPosition(*(Engine::getWindow()));
+                        auto pos = sf::Mouse::getPosition(Engine::getWindow());
                         //std::cout << "mouse pos x:" << pos.x << "y:" << pos.y << std::endl;
                         if(hitbox->contains(pos)) return true;
                         /*
@@ -51,7 +51,7 @@ inline void initDefaultPredicates(EventMgr* mgr)
             }});
 
     mgr->addPredicate("MouseUp", Predicate{[](Object* a, Object* b, std::string arg1, std::string arg2){
-        if(Engine::isRunning() && Engine::getWindow() != nullptr)
+        if(Engine::isRunning())// && Engine::getWindow() != nullptr)
             {
                 //std::cout << "2";
                 if(!sf::Mouse::isButtonPressed(sf::Mouse::Left))
@@ -88,10 +88,9 @@ inline void initDefaultPredicates(EventMgr* mgr)
     }});
 
     mgr->addPredicate("MouseOut", Predicate{[](Object* a, Object* b,std::string arg1, std::string arg2){
-            Game* game = Game::getGame();
             //std::cout << "t1";
-            if(game!=nullptr && game->getWindow() != nullptr)
-            {
+            //if(Engine::getWindow() != nullptr)
+            //{
                 //std::cout << "2";
                 if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
                 {
@@ -100,7 +99,7 @@ inline void initDefaultPredicates(EventMgr* mgr)
                     {
                         //std::cout << "4";
                         sf::IntRect* hitbox = a->getHitbox();
-                        auto pos = sf::Mouse::getPosition(*(game->getWindow()));
+                        auto pos = sf::Mouse::getPosition(Engine::getWindow());
                         /*std::cout << "mouse pos x:" << pos.x << "y:" << pos.y << std::endl;
                         std::cout << "lef: " << hitbox->left << std::endl;
                         std::cout << "top: " << hitbox->top << std::endl;
@@ -113,7 +112,7 @@ inline void initDefaultPredicates(EventMgr* mgr)
                            pos.x > hitbox->top+hitbox->height) return true;
                     }
                 }
-            };
+            //};
             return false;
             }});
 

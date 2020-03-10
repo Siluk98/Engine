@@ -21,7 +21,7 @@ public:
     Engine();
     ~Engine();
     void run();
-    void stop();
+    static void stop();
     static void pushState(State*);
     static void popState();
     static State* getState();
@@ -31,6 +31,7 @@ protected:
     //void init();
     void physics();
     void render();
+    void events();
     //void cleanup();
 
     static bool running;

@@ -27,7 +27,7 @@ private:
     std::string actionName;
     Predicate predicate;
     Action action;
-    EventMgr* eventmgr;
+    //EventMgr* eventmgr;
 };
 
 #endif // EVENT_HPP

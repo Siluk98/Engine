@@ -11,10 +11,10 @@ public:
     ~FontMgr();
     sf::Font* loadFont(std::string name);
     static FontMgr* getInstance();
-    static FontMgr* create();
+    //static FontMgr* create();
 private:
     FontMgr();
-    std::vector<sf::Font*> fonts;
+    std::map<std::string,sf::Font*> fonts;
     static FontMgr* instance;
 };
 

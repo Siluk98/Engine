@@ -16,9 +16,9 @@ public:
     int findObjectIndex(std::string id);
     virtual void init()=0;
     virtual void cleanup()=0;
-    virtual void handleEvents(sf::RenderWindow)=0;
+    virtual void handleEvents(sf::RenderWindow&)=0;
     virtual void update()=0;
-    virtual void render(sf::RenderWindow*)=0;
+    virtual void render(sf::RenderWindow&)=0;
     virtual void pause()=0;
     virtual void resume()=0;
     std::string getId();

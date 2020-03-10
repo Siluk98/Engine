@@ -46,8 +46,6 @@ UI::Checkbox::Checkbox(std::string _id, cssHandler& css)
     std::cout << "hitbox: " << hitbox->left << " " << hitbox->top << std::endl;
     isPressed = false;
 
-
-
     addType("checkbox");
     addEvent("MouseDown", Action{[](Object* a, Object* b, std::string arg1, std::string arg2){
                 UI::Checkbox *c = dynamic_cast<Checkbox*>(a);

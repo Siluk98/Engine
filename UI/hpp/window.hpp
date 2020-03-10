@@ -18,7 +18,7 @@ namespace UI
         std::string text;
         bool isPressed;
         Action click;
-        */I
+        */
     };
 }
 

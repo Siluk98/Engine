@@ -160,7 +160,7 @@ std::map<std::string, std::string> CssMgr::loadColors(std::string filename)
     if(!file.good())
     {
         std::cout << "Colors could not be loaded" << std::endl;
-        return ret;
+        //return ret;
     }
     else
     {
@@ -178,9 +178,10 @@ std::map<std::string, std::string> CssMgr::loadColors(std::string filename)
                 [](unsigned char c){ return std::tolower(c); });
             ret[name] = clr;
         }
-        return ret;
+        //return ret;
     }
     file.close();
+    return ret;
 }
 
 std::string CssMgr::getColor(std::string name)

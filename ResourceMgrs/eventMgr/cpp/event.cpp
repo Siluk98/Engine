@@ -7,7 +7,7 @@ Event::Event(){
     action = nullptr;
     predName = "Anonymous";
     actionName = "Anonymous";
-    eventmgr = EventMgr::getInstance(); // delete this
+    //eventmgr = EventMgr::getInstance(); // delete this
 };
 Event::~Event(){};
 
@@ -41,18 +41,17 @@ void Event::handle(Object* arg1 = nullptr,Object*arg2 = nullptr, std::string arg
 void Event::create(std::string pred, std::string act){
     predName = pred;
     actionName = act;
-    predicate = eventmgr->getPredicate(pred);
-    action = eventmgr->getAction(act);
+    predicate = EventMgr::getInstance()->getPredicate(pred);
+    action = EventMgr::getInstance()->getAction(act);
 };
 void Event::create(Predicate pred, std::string act){
     predicate = pred;
     actionName = act;
-    action = eventmgr->getAction(act);
+    action = EventMgr::getInstance()->getAction(act);
 };
 void Event::create(std::string pred, Action act){
-    if(eventmgr)
    predName = pred;
-   predicate = eventmgr->getPredicate(pred);
+   predicate = EventMgr::getInstance()->getPredicate(pred);
    action = act;
 };
 void Event::create(Predicate pred, Action act){
